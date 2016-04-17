@@ -1,0 +1,14 @@
+PODS:
+  - ISUActionMenu (0.1.0)
+
+DEPENDENCIES:
+  - ISUActionMenu (from `../`)
+
+EXTERNAL SOURCES:
+  ISUActionMenu:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ISUActionMenu: 4026ef30b79c506680dded4b23442563b87ebf54
+
+COCOAPODS: 0.39.0
