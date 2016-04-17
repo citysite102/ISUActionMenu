@@ -154,18 +154,20 @@
     
     
     for (NSUInteger i = self.itemViews.count - 1 ; i != NSUIntegerMax ; i--) {
-        [UIView animateWithDuration:0.5
-                              delay: -(i - self.itemViews.count) * 0.1
+        [UIView animateWithDuration:0.6
+                              delay:-(i - self.itemViews.count) * 0.1
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:0.5
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
-                             [self updateCellAtIndex:i withProgress:0];
-                         } completion:^(BOOL finished) {
-                             if (i == self.itemViews.count - 1) {
-                                 if (completionHandler) {
-                                     completionHandler(self);
-                                 }
-                             }
-                         }];
+                 [self updateCellAtIndex:i withProgress:0];
+         } completion:^(BOOL finished) {
+             if (i == self.itemViews.count - 1) {
+                 if (completionHandler) {
+                     completionHandler(self);
+                 }
+             }
+         }];
     }
     
     [CATransaction begin];
