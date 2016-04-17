@@ -55,6 +55,3 @@ Samuel, citysite1025@gmail.com
 ## License
 
 ISUActionMenu is available under the MIT license. See the LICENSE file for more info.
-=======
-An interactive action menu button with gesture.
->>>>>>> 2445981cd6249e5ddfca190e6143aa6afc8bd19e
