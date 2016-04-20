@@ -24,12 +24,14 @@
     if (self) {
         
         // Background
-        self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.backgroundView.layer.backgroundColor = [UIColor colorWithRed:229.0f/255.0f green:104.0f/255.0f blue:92.0f/255.0f alpha:1.0].CGColor;
-        self.backgroundView.layer.cornerRadius = 20.0;
-        self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.backgroundView = ({
+            UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+            backgroundView.layer.backgroundColor = [UIColor colorWithRed:229.0f/255.0f green:104.0f/255.0f blue:92.0f/255.0f alpha:1.0].CGColor;
+            backgroundView.layer.cornerRadius = 20.0;
+            backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+            backgroundView;
+        });
         [self addSubview:self.backgroundView];
-        
         [self addConstraint:[NSLayoutConstraint constraintWithItem:self.backgroundView
                                                          attribute:NSLayoutAttributeCenterX
                                                          relatedBy:NSLayoutRelationEqual
@@ -61,9 +63,12 @@
         
         
         // Icon
-        self.iconView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        self.iconView.tintColor = [UIColor whiteColor];
-        self.iconView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.iconView = ({
+            UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectZero];
+            iconView.tintColor = [UIColor whiteColor];
+            iconView.translatesAutoresizingMaskIntoConstraints = NO;
+            iconView;
+        });
         [self addSubview:self.iconView];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:self.iconView
                                                          attribute:NSLayoutAttributeCenterX
@@ -82,12 +87,15 @@
         
         
         // Text
-        self.textContainer = [[UIView alloc] initWithFrame:CGRectZero];
-        self.textContainer.layer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.75].CGColor;
-        self.textContainer.layer.cornerRadius    = 10.0;
-        self.textContainer.alpha = 0;
-        self.textContainer.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
-        self.textContainer.translatesAutoresizingMaskIntoConstraints = NO;
+        self.textContainer = ({
+            UIView *textContainer = [[UIView alloc] initWithFrame:CGRectZero];
+            textContainer.layer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.75].CGColor;
+            textContainer.layer.cornerRadius    = 10.0;
+            textContainer.alpha = 0;
+            textContainer.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
+            textContainer.translatesAutoresizingMaskIntoConstraints = NO;
+            textContainer;
+        });
         [self addSubview:self.textContainer];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:self.textContainer
                                                          attribute:NSLayoutAttributeCenterX
@@ -104,11 +112,14 @@
                                                         multiplier:1.0f
                                                           constant:-45.0f]];
         
-        self.textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.textLabel.font = [UIFont systemFontOfSize:14.0];
-        self.textLabel.textColor = [UIColor whiteColor];
-        self.textLabel.textAlignment = NSTextAlignmentCenter;
-        self.textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.textLabel = ({
+            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            textLabel.font = [UIFont systemFontOfSize:14.0];
+            textLabel.textColor = [UIColor whiteColor];
+            textLabel.textAlignment = NSTextAlignmentCenter;
+            textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+            textLabel;
+        });
         [self.textContainer addSubview:self.textLabel];
         [self.textContainer addConstraint:[NSLayoutConstraint constraintWithItem:self.textLabel
                                                                        attribute:NSLayoutAttributeCenterX
@@ -141,14 +152,16 @@
                                                                                      views:@{@"ViewA":self.textLabel}]];
         
         // Indicator Path
-        self.indicatorPath = [[CAShapeLayer alloc] init];
-        self.indicatorPath.path        = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-20, -20, 40, 40)].CGPath;
-        self.indicatorPath.strokeColor = [UIColor whiteColor].CGColor;
-        self.indicatorPath.fillColor   = [UIColor clearColor].CGColor;
-        self.indicatorPath.lineWidth   = 2.0;
-        self.indicatorPath.transform   = CATransform3DMakeRotation(-M_PI_2, 0, 0, 1);
+        self.indicatorPath = ({
+            CAShapeLayer *indicatorPath = [[CAShapeLayer alloc] init];
+            indicatorPath.path        = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-20, -20, 40, 40)].CGPath;
+            indicatorPath.strokeColor = [UIColor whiteColor].CGColor;
+            indicatorPath.fillColor   = [UIColor clearColor].CGColor;
+            indicatorPath.lineWidth   = 2.0;
+            indicatorPath.transform   = CATransform3DMakeRotation(-M_PI_2, 0, 0, 1);
+            indicatorPath;
+        });
         [self.layer addSublayer:self.indicatorPath];
-        
         
     }
     return self;

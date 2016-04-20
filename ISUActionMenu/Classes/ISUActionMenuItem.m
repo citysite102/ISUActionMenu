@@ -13,9 +13,12 @@
 + (instancetype)itemWithImage:(UIImage *)image
                          text:(NSString *)text {
     
-    ISUActionMenuItem *item = [[ISUActionMenuItem alloc] init];
-    item.image = image;
-    item.text  = text;
+    ISUActionMenuItem *item = ({
+        ISUActionMenuItem *item_internal = [[ISUActionMenuItem alloc] init];
+        item_internal.image = image;
+        item_internal.text  = text;
+        item_internal;
+    });
     return item;
 }
 

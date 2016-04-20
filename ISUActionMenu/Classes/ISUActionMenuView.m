@@ -71,19 +71,21 @@
                                                         multiplier:1.0f
                                                           constant:40.0f]];
         
-        
-        self.indicatorPath = [[CAShapeLayer alloc] init];
-        self.indicatorPath.path        = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-40, -40, 80, 80)].CGPath;
-        self.indicatorPath.strokeColor = [UIColor colorWithRed:229.0f/255.0f green:104.0f/255.0f blue:92.0f/255.0f alpha:1.0].CGColor;
-        self.indicatorPath.fillColor   = [UIColor clearColor].CGColor;
-        self.indicatorPath.lineWidth   = 6.0;
-        self.indicatorPath.strokeEnd   = 0.0;
-        self.indicatorPath.anchorPoint = (CGPoint){0.5, 0.5};
-        self.indicatorPath.transform = CATransform3DRotate(self.indicatorPath.transform,
-                                                            -M_PI_2,
-                                                           0.0,
-                                                           0.0,
-                                                           1.0);
+        self.indicatorPath = ({
+            CAShapeLayer *indicatorPath = [[CAShapeLayer alloc] init];
+            indicatorPath.path        = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-40, -40, 80, 80)].CGPath;
+            indicatorPath.strokeColor = [UIColor colorWithRed:229.0f/255.0f green:104.0f/255.0f blue:92.0f/255.0f alpha:1.0].CGColor;
+            indicatorPath.fillColor   = [UIColor clearColor].CGColor;
+            indicatorPath.lineWidth   = 6.0;
+            indicatorPath.strokeEnd   = 0.0;
+            indicatorPath.anchorPoint = (CGPoint){0.5, 0.5};
+            indicatorPath.transform = CATransform3DRotate(self.indicatorPath.transform,
+                                                               -M_PI_2,
+                                                               0.0,
+                                                               0.0,
+                                                               1.0);
+            indicatorPath;
+        });
         [self.layer addSublayer:self.indicatorPath];
         
     }
