@@ -5,11 +5,13 @@
 [![License](https://img.shields.io/cocoapods/l/ISUActionMenu.svg?style=flat)](http://cocoapods.org/pods/ISUActionMenu)
 [![Platform](https://img.shields.io/cocoapods/p/ISUActionMenu.svg?style=flat)](http://cocoapods.org/pods/ISUActionMenu)
 
-ISUActionMenu provides an interactive action menu which is similar to the actino menu used by ISSUU APP.
+<img src="Assets/demo.gif">
+
+ISUActionMenu provides an "fully-customizable "interactive action menu which is similar to the action menu used by ISSUU (https://itunes.apple.com/en/app/issuu-world-magazines.-free./id914453825?mt=8).
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+To run the example project, clone the repo, and run `pod install` from the Example directory first, the example include three demo images as the gif shown above.
 
 ## Usage
 
@@ -22,12 +24,14 @@ Then just add a `ISUActionMenuGestureRecognizer` object that acts as trigger ges
    self.ActionMenuGesture = [[ISUActionMenuGestureRecognizer alloc] init];
 ```
 The `ISUActionMenu` is highly customizable, to meet your need, initialize the action menu as:
-```
+```objC
    self.ActionMenuGesture = [[ISUActionMenuGestureRecognizer alloc]
                              initWithTarget:self
                              action:@selector(handleActionMenuGesture:)
                              initializationHandler:^ISUActionMenuView * _Nonnull {
                                  ISUActionMenuView *actionMenuView = [[ISUActionMenuView alloc] init];
+                                 // eg. actionMenuView.redius = 5.0f;
+                                 // The customizable properties can be referenceed from ISUActionMenuView.h
                                  return actionMenuView;
                              }];
 ```
@@ -36,8 +40,6 @@ With your customizable setting in `initializationHandler` like:
 actionMenuView.indicatorPathColor = [UIColor redColor];
 ```
 Further customizable property can be founded in `ISUActionMenuView.h`
-
-## Requirements
 
 ## Installation
 
