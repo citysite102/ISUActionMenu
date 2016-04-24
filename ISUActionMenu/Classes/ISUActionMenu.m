@@ -28,15 +28,15 @@ typedef ISUActionMenuView *(^initializationHandler)();
 - (instancetype)initWithTarget:(id)target
                         action:(SEL)action {
     
-    self = [super initWithTarget:self action:@selector(handleLongPressedGesture:)];
-    if (self) {
-        ISUActionMenuView *menuView = [[ISUActionMenuView alloc] initWithFrame:CGRectZero];
-        
-        self.s_target = target;
-        self.s_action = action;
-        self.menuView = menuView;
-    }
-    return self;
+//    self = [super initWithTarget:self action:@selector(handleLongPressedGesture:)];
+//    if (self) {
+//        ISUActionMenuView *menuView = [[ISUActionMenuView alloc] initWithFrame:CGRectZero];
+//        self.s_target = target;
+//        self.s_action = action;
+//        self.menuView = menuView;
+//    }
+//    return self;
+    return [self initWithTarget:target action:action initializationHandler:nil];
 }
 
 
@@ -44,10 +44,12 @@ typedef ISUActionMenuView *(^initializationHandler)();
                         action:(SEL)action
          initializationHandler:(ISUActionMenuView *(^)())initializationHandler {
     
-    self = [self initWithTarget:self action:@selector(handleLongPressedGesture:)];
+    self = [super initWithTarget:self action:@selector(handleLongPressedGesture:)];
     if (self) {
+        ISUActionMenuView *menuView = [[ISUActionMenuView alloc] initWithFrame:CGRectZero];
         self.s_target = target;
         self.s_action = action;
+        self.menuView = menuView;
         self.initializationHandler = initializationHandler;
     }
     return self;
@@ -60,8 +62,13 @@ typedef ISUActionMenuView *(^initializationHandler)();
     if (sender.state == UIGestureRecognizerStateBegan) {
         UIView *targetView = self.targetView ? : self.view;
         
-        ISUActionMenuView *menuView = self.initializationHandler();
-        self.menuView          = menuView;
+        if (_initializationHandler) {
+            ISUActionMenuView *menuView = self.initializationHandler();
+            self.menuView      = menuView;
+        } else {
+            self.menuView      = [[ISUActionMenuView alloc] init];
+        }
+    
         self.menuView.frame    = CGRectZero;
         self.menuView.items    = self.items;
         self.menuView.center   = [sender locationInView:targetView];

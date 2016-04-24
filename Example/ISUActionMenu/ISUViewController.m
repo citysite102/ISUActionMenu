@@ -21,13 +21,15 @@
 {
     [super viewDidLoad];
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.ActionMenuGesture = [[ISUActionMenuGestureRecognizer alloc]
-                             initWithTarget:self
-                             action:@selector(handleActionMenuGesture:)
-                             initializationHandler:^ISUActionMenuView * _Nonnull {
-                                 ISUActionMenuView *actionMenuView = [[ISUActionMenuView alloc] init];
-                                 return actionMenuView;
-                             }];
+//    self.ActionMenuGesture = [[ISUActionMenuGestureRecognizer alloc]
+//                             initWithTarget:self
+//                             action:@selector(handleActionMenuGesture:)
+//                             initializationHandler:^ISUActionMenuView * _Nonnull {
+//                                 ISUActionMenuView *actionMenuView = [[ISUActionMenuView alloc] init];
+//                                 return actionMenuView;
+//                             }];
+//    
+    self.ActionMenuGesture = [[ISUActionMenuGestureRecognizer alloc] initWithTarget:self action:@selector(handleActionMenuGesture:)];
     
     self.ActionMenuGesture.items = @[[ISUActionMenuItem itemWithImage:[UIImage imageNamed:@"icon_move"] text:@"Move"],
                                     [ISUActionMenuItem itemWithImage:[UIImage imageNamed:@"icon_duplicate"] text:@"Duplicate"],
