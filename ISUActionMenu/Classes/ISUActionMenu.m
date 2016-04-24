@@ -44,7 +44,7 @@ typedef ISUActionMenuView *(^initializationHandler)();
                         action:(SEL)action
          initializationHandler:(ISUActionMenuView *(^)())initializationHandler {
     
-    self = [super initWithTarget:self action:@selector(handleLongPressedGesture:)];
+    self = [self initWithTarget:self action:@selector(handleLongPressedGesture:)];
     if (self) {
         self.s_target = target;
         self.s_action = action;

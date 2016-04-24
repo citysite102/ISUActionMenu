@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGPoint)startLocationInView:(UIView *)view;
 - (instancetype)initWithTarget:(id)target
                         action:(SEL)action
-         initializationHandler:(ISUActionMenuView *(^)())initializationHandler;
+         initializationHandler:(ISUActionMenuView *(^)())initializationHandler NS_DESIGNATED_INITIALIZER;
 
 @end
 
