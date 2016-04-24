@@ -20,7 +20,6 @@ typedef ISUActionMenuView *(^initializationHandler)();
 @property (nonatomic, readwrite) SEL s_action;
 @property (nonatomic, weak) id s_target;
 @property (nonatomic, assign) initializationHandler initializationHandler;
-//@property (nonatomic, weak) ISUActionMenuView *menuView;
 
 @end
 

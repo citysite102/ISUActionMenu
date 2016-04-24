@@ -25,23 +25,26 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        self.autoAdjustCenterDegree = YES;
+        self.autoAdjustCenterDegree     = YES;
         self.centerDegreeReferenceFrame = [UIScreen mainScreen].bounds;
         // Define self intersectionDegree between item.
-        self.intersectionDegree = 60.0;
+        self.intersectionDegree         = 60.0;
         // Define default center degree.
-        self.centerDegree = 90;
+        self.centerDegree               = 90;
         // Define circle radius.
-        self.radius = 90.0;
-        self.lastFocusedCellIndex = -1;
-        self.minimumAcceptProgress = 0.8;
+        self.radius                     = 90.0;
+        self.lastFocusedCellIndex       = -1;
+        self.minimumAcceptProgress      = 0.8;
         
-        self.touchPointView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.touchPointView.layer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.35].CGColor;
-        self.touchPointView.layer.cornerRadius = 20.0;
-        self.touchPointView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.touchPointView = ({
+            UIView *touchPointView                                   = [[UIView alloc] initWithFrame:CGRectZero];
+            touchPointView.layer.backgroundColor                     = [UIColor colorWithWhite:1 alpha:0.35].CGColor;
+            touchPointView.layer.cornerRadius                        = 20.0;
+            touchPointView.translatesAutoresizingMaskIntoConstraints = NO;
+            touchPointView;
+        });
+        
         [self addSubview:self.touchPointView];
-        
         [self addConstraint:[NSLayoutConstraint constraintWithItem:self.touchPointView
                                                          attribute:NSLayoutAttributeCenterX
                                                          relatedBy:NSLayoutRelationEqual
@@ -77,15 +80,15 @@
             indicatorPath.strokeColor = [UIColor colorWithRed:229.0f/255.0f green:104.0f/255.0f blue:92.0f/255.0f alpha:1.0].CGColor;
             indicatorPath.fillColor   = [UIColor clearColor].CGColor;
             indicatorPath.lineWidth   = 6.0;
-            indicatorPath.strokeEnd   = 0.0;
+            indicatorPath.strokeEnd   = 1.0;
             indicatorPath.anchorPoint = (CGPoint){0.5, 0.5};
-            indicatorPath.transform = CATransform3DRotate(self.indicatorPath.transform,
-                                                               -M_PI_2,
-                                                               0.0,
-                                                               0.0,
-                                                               1.0);
             indicatorPath;
         });
+        self.indicatorPath.transform = CATransform3DRotate(self.indicatorPath.transform,
+                                                           -M_PI_2,
+                                                           0.0,
+                                                           0.0,
+                                                           1.0);
         [self.layer addSublayer:self.indicatorPath];
         
     }
@@ -174,29 +177,27 @@
     
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
-        CABasicAnimation *indicatorSizeAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-        indicatorSizeAnimation.fromValue = @1;
-        indicatorSizeAnimation.toValue = @0.8;
-        indicatorSizeAnimation.duration = 0.6;
+        CABasicAnimation *indicatorSizeAnimation   = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        indicatorSizeAnimation.fromValue           = @1;
+        indicatorSizeAnimation.toValue             = @0.8;
+        indicatorSizeAnimation.duration            = 0.6;
         indicatorSizeAnimation.removedOnCompletion = NO;
-        indicatorSizeAnimation.fillMode = kCAFillModeForwards;
-        indicatorSizeAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+        indicatorSizeAnimation.fillMode            = kCAFillModeForwards;
+        indicatorSizeAnimation.timingFunction      = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
         [self.indicatorPath addAnimation:indicatorSizeAnimation forKey:nil];
     }];
     
     CABasicAnimation *indicatorPathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    indicatorPathAnimation.fromValue = @0;
-    indicatorPathAnimation.toValue = @1.0;
-    indicatorPathAnimation.repeatCount = 1;
-    indicatorPathAnimation.duration = 0.5;
+    indicatorPathAnimation.fromValue           = @0;
+    indicatorPathAnimation.toValue             = @1.0;
+    indicatorPathAnimation.repeatCount         = 1;
+    indicatorPathAnimation.duration            = 0.5;
     indicatorPathAnimation.removedOnCompletion = NO;
-    indicatorPathAnimation.fillMode = kCAFillModeForwards;
-    indicatorPathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    indicatorPathAnimation.fillMode            = kCAFillModeForwards;
+    indicatorPathAnimation.timingFunction      = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [self.indicatorPath addAnimation:indicatorPathAnimation forKey:nil];
     [CATransaction commit];
     
-
-
 }
 
 - (void)dismissWithItem:(ISUActionMenuItem *)item completionHandler:(void (^)(ISUActionMenuView *))completionHandler {
@@ -235,21 +236,21 @@
     
     progress = progress >= 0 ? progress : MAX(-0.1, progress * 0.25);
     
-    CGFloat centerDegree = self.convertedCenterDegree;
-    CGFloat totalDegree  = ((CGFloat)self.itemViews.count -1) * self.intersectionDegree;
-    CGFloat startDegree  = centerDegree - totalDegree * 0.5;
-    CGPoint center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    
+    CGFloat centerDegree            = self.convertedCenterDegree;
+    CGFloat totalDegree             = ((CGFloat)self.itemViews.count -1) * self.intersectionDegree;
+    CGFloat startDegree             = centerDegree - totalDegree * 0.5;
+    CGPoint center                  = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+
     // Update cell
     ISUActionMenuItemView *itemView = self.itemViews[index];
-    CGFloat degree = startDegree +(index * self.intersectionDegree);
-    CGFloat angle  = degree  / 180. * M_PI;
-    CGFloat scale  = MIN(1.25, 1.0 + 0.25 *progress);
-    
-    itemView.progress = progress;
-    itemView.center = CGPointMake(center.x + self.radius * scale * cos(angle),
-                              center.y - self.radius * scale * sin(angle));
-    itemView.layer.transform = CATransform3DMakeScale(scale, scale, 1.0);
+    CGFloat degree                  = startDegree +(index * self.intersectionDegree);
+    CGFloat angle                   = degree  / 180. * M_PI;
+    CGFloat scale                   = MIN(1.25, 1.0 + 0.25 *progress);
+
+    itemView.progress               = progress;
+    itemView.center                 = CGPointMake(center.x + self.radius * scale * cos(angle),
+                                                  center.y - self.radius * scale * sin(angle));
+    itemView.layer.transform        = CATransform3DMakeScale(scale, scale, 1.0);
 }
 
 - (CGFloat)convertedCenterDegree {
@@ -310,40 +311,40 @@
     }
     
     // Generate center degree according to touch position.
-    CGFloat centerDegree = self.convertedCenterDegree;
-    
-    
-    CGPoint center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    CGPoint touchPoint = [sender locationInView:self];
-    CGPoint cgTouchPoint = CGPointApplyAffineTransform(touchPoint, CGAffineTransformMakeScale(1, -1));
-    
+    CGFloat centerDegree        = self.convertedCenterDegree;
+
+
+    CGPoint center              = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    CGPoint touchPoint          = [sender locationInView:self];
+    CGPoint cgTouchPoint        = CGPointApplyAffineTransform(touchPoint, CGAffineTransformMakeScale(1, -1));
+
     // Calculate center angle and evaluate center vector
-    CGFloat centerAngle  = centerDegree / 180. * M_PI;
-    CGPoint centerVector = CGPointMake(cos(centerAngle), sin(centerAngle));
-    
+    CGFloat centerAngle         = centerDegree / 180. * M_PI;
+    CGPoint centerVector        = CGPointMake(cos(centerAngle), sin(centerAngle));
+
     // Calculate drag vector
-    CGPoint dragVector   = (CGPoint){ .x = cgTouchPoint.x - center.x, .y = cgTouchPoint.y - center.y };
-    
+    CGPoint dragVector          = (CGPoint){ .x = cgTouchPoint.x - center.x, .y = cgTouchPoint.y - center.y };
+
     // Calculate direction
     CGPoint convertedDragVector = CGPointApplyAffineTransform(dragVector, CGAffineTransformMakeRotation(-centerDegree / 180. * M_PI));
-    
+
     // Calculate intersection degree between center vector and drag vector (Law of cosines)
-    CGFloat intersectionAngle = acos(((centerVector.x * dragVector.x) + (centerVector.y * dragVector.y)) /
+    CGFloat intersectionAngle   = acos(((centerVector.x * dragVector.x) + (centerVector.y * dragVector.y)) /
                                      (hypot(centerVector.x, centerVector.y) * hypot(dragVector.x, dragVector.y)));
-    CGFloat intersectionDegree = (intersectionAngle * 180. / M_PI) * (convertedDragVector.y > 0 ? 1 : -1);
-    
-    
+    CGFloat intersectionDegree  = (intersectionAngle * 180. / M_PI) * (convertedDragVector.y > 0 ? 1 : -1);
+
+
     // Calculate the startDegree for the item
-    CGFloat startDegree = -((CGFloat)self.itemViews.count - 1) * self.intersectionDegree * 0.5;
-    
+    CGFloat startDegree         = -((CGFloat)self.itemViews.count - 1) * self.intersectionDegree * 0.5;
+
     // Calculate item view status
-    NSInteger itemViewIndex = round((intersectionDegree - startDegree) / self.intersectionDegree);
-    CGFloat itemViewDegree = (centerDegree + startDegree) + (itemViewIndex * self.intersectionDegree);
-    CGFloat itemViewangle  = itemViewDegree / 180. * M_PI;
-    CGPoint itemViewCenter = CGPointMake(center.x + self.radius * cos(itemViewangle), center.y - self.radius * sin(itemViewangle));
-    
-    CGFloat progress = 1.0 -(hypot(itemViewCenter.x - touchPoint.x, itemViewCenter.y - touchPoint.y) / self.radius);
-    progress = MIN(1.0, progress *(1.0 / self.minimumAcceptProgress));
+    NSInteger itemViewIndex     = round((intersectionDegree - startDegree) / self.intersectionDegree);
+    CGFloat itemViewDegree      = (centerDegree + startDegree) + (itemViewIndex * self.intersectionDegree);
+    CGFloat itemViewangle       = itemViewDegree / 180. * M_PI;
+    CGPoint itemViewCenter      = CGPointMake(center.x + self.radius * cos(itemViewangle), center.y - self.radius * sin(itemViewangle));
+
+    CGFloat progress            = 1.0 -(hypot(itemViewCenter.x - touchPoint.x, itemViewCenter.y - touchPoint.y) / self.radius);
+    progress                    = MIN(1.0, progress *(1.0 / self.minimumAcceptProgress));
     
     if ([self.delegate respondsToSelector:@selector(actionMenu:item:progressChanged:)]) {
         
