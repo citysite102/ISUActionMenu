@@ -11,7 +11,7 @@ ISUActionMenu provides an "fully-customizable "interactive action menu which is 
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first, the example include three demo images as the gif shown above.
+To run the example project, clone this repo, and run `pod install` from the Example directory first, the example include three demo images as the gif shown above.
 
 ## Usage
 
