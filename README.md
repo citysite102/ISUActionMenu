@@ -52,7 +52,7 @@ pod "ISUActionMenu"
 
 ## Author
 
-Samuel, citysite1025@gmail.com
+Samuel,  citysite1025@gmail.com
 
 ## License
 
