@@ -56,4 +56,4 @@ Samuel, citysite1025@gmail.com
 
 ## License
 
-ISUActionMenu is available under the MIT license. See the LICENSE file for more info.
+ISUActionMenu is available under the MIT license. See the LICENSE file for more information.
