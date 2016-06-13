@@ -15,7 +15,7 @@ To run the example project, clone this repo, and run `pod install` from the Exam
 
 ## Usage
 
-At first, import `ISUActionMenuSupport`
+At first, you have to import `ISUActionMenuSupport`
 ```
 #import <ISUActionMenu/ISUActionMenuSupport.h>
 ```
