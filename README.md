@@ -7,7 +7,7 @@
 
 <img src="Assets/demo.gif">
 
-ISUActionMenu provides an "fully-customizable "interactive action menu which is similar to the action menu used by ISSUU (https://itunes.apple.com/en/app/issuu-world-magazines.-free./id914453825?mt=8).
+ISUActionMenu provides an "fully-customizable" interactive action menu which is similar to the action menu used by ISSUU (https://itunes.apple.com/en/app/issuu-world-magazines.-free./id914453825?mt=8).
 
 ## Example
 
